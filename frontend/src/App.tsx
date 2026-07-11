@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
-import { createPublicClient, http, custom } from 'viem'
+import { createPublicClient, http } from 'viem'
 import { VERITAS_CORE_ABI, VERITAS_CORE_ADDRESS, CHAIN_ID, RITUAL_RPC } from './contracts'
-import { Shield, ShieldAlert, ShieldCheck, Activity, Search, Upload } from 'lucide-react'
+import { Shield, ShieldAlert, ShieldCheck, Activity, Search } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 // Create public client connecting directly to Ritual RPC
 const publicClient = createPublicClient({

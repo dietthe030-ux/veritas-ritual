@@ -82,7 +82,8 @@ export default function App() {
         abi: VERITAS_CORE_ABI,
         functionName: 'submitForVerification',
         args: [mediaHash as `0x${string}`, mediaUri],
-        account: account as `0x${string}`
+        account: account as `0x${string}`,
+        chain: null
       })
       
       alert(`Transaction submitted! Hash: ${hash}`)

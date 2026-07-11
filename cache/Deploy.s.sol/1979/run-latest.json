@@ -1,0 +1,16 @@
+{
+  "transactions": [
+    {
+      "rpc": "https://rpc.ritualfoundation.org"
+    },
+    {
+      "rpc": "https://rpc.ritualfoundation.org"
+    },
+    {
+      "rpc": "https://rpc.ritualfoundation.org"
+    },
+    {
+      "rpc": "https://rpc.ritualfoundation.org"
+    }
+  ]
+}

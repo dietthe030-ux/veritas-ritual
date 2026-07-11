@@ -23,10 +23,14 @@ export default function App() {
   const [searchHash, setSearchHash] = useState('')
   const [searchResult, setSearchResult] = useState<any>(null)
   
-  // Dummy showcases
   const showcases = [
     { hash: "0x1234...", uri: "ipfs://Qm...", verdict: 0, score: 890 },
-    { hash: "0x5678...", uri: "ipfs://Qc...", verdict: 2, score: 120 }
+    { hash: "0x8fa9...", uri: "ipfs://Qx...", verdict: 0, score: 950 },
+    { hash: "0x5678...", uri: "ipfs://Qc...", verdict: 2, score: 120 },
+    { hash: "0x3b4c...", uri: "ipfs://Qp...", verdict: 1, score: 450 },
+    { hash: "0x9a2f...", uri: "ipfs://Qz...", verdict: 0, score: 920 },
+    { hash: "0x7d8e...", uri: "ipfs://Qw...", verdict: 2, score: 50 },
+    { hash: "0x1122...", uri: "ipfs://Qa...", verdict: 0, score: 880 }
   ]
 
   useEffect(() => {
@@ -204,13 +208,16 @@ export default function App() {
             <div key={i} className="glass-panel p-4 flex flex-col gap-2 opacity-60 hover:opacity-100 transition-opacity">
               <div className="text-xs font-mono">{s.hash}</div>
               <div className="flex justify-between items-center mt-auto pt-4">
-                <span className={`text-xs px-2 py-1 rounded ${s.verdict === 0 ? 'bg-[#10b981]/20 text-[#10b981]' : 'bg-[#ef4444]/20 text-[#ef4444]'}`}>
-                  {s.verdict === 0 ? 'Authentic' : 'Deepfake'}
+                <span className={`text-xs px-2 py-1 rounded ${s.verdict === 0 ? 'bg-[#10b981]/20 text-[#10b981]' : s.verdict === 1 ? 'bg-[#f59e0b]/20 text-[#f59e0b]' : 'bg-[#ef4444]/20 text-[#ef4444]'}`}>
+                  {s.verdict === 0 ? 'Authentic' : s.verdict === 1 ? 'Suspicious' : 'Deepfake'}
                 </span>
                 <span className="text-xs">{s.score}</span>
               </div>
             </div>
           ))}
+          <div className="glass-panel p-4 flex items-center justify-center opacity-40 hover:opacity-80 transition-opacity cursor-pointer">
+            <span className="text-2xl font-bold tracking-[0.2em] text-white/50">...</span>
+          </div>
         </div>
       </section>
     </div>

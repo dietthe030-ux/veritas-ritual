@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { createPublicClient, http } from 'viem'
+import { createPublicClient, http, custom, createWalletClient } from 'viem'
 import { VERITAS_CORE_ABI, VERITAS_CORE_ADDRESS, CHAIN_ID, RITUAL_RPC } from './contracts'
 import { Shield, ShieldAlert, ShieldCheck, Activity, Search } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -64,6 +64,31 @@ export default function App() {
       })
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  const submitToAgent = async () => {
+    if (!account) return alert("Please connect your wallet first!")
+    if (!mediaHash || !mediaUri) return alert("Please fill in both Media Hash and URI")
+    
+    try {
+      const walletClient = createWalletClient({
+        chain: { id: CHAIN_ID, name: 'Ritual Testnet', nativeCurrency: { name: 'RITUAL', symbol: 'RITUAL', decimals: 18 }, rpcUrls: { default: { http: [RITUAL_RPC] } } } as any,
+        transport: custom(window.ethereum)
+      })
+      
+      const hash = await walletClient.writeContract({
+        address: VERITAS_CORE_ADDRESS as `0x${string}`,
+        abi: VERITAS_CORE_ABI,
+        functionName: 'submitForVerification',
+        args: [mediaHash as `0x${string}`, mediaUri],
+        account: account as `0x${string}`
+      })
+      
+      alert(`Transaction submitted! Hash: ${hash}`)
+    } catch (e: any) {
+      console.error(e)
+      alert("Error submitting transaction: " + e.message)
     }
   }
 
@@ -140,7 +165,7 @@ export default function App() {
             <div className="flex gap-4">
               <button 
                 className="flex-1 bg-[#9048f7] text-white py-3 rounded-lg font-medium active:scale-95 transition-transform"
-                onClick={() => alert("Verification submission triggered (Requires smart contract write)")}
+                onClick={submitToAgent}
               >
                 Submit to Agent
               </button>
